@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDPR Notice Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GDPR Notice Generator</h1>
+        <form id="noticeForm">
+            <label for="type">Type of Notice:</label>
+            <select id="type" required>
+                <option value="">Select Notice Type</option>
+                <option value="general">General Information</option>
+                <option value="access">Data Access Request Response</option>
+                <option value="breach">Data Breach Notification</option>
+            </select>
+
+            <label for="name">Data Subject's Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Data Subject's Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="additionalInfo">Additional Information:</label>
+            <textarea id="additionalInfo" rows="4" placeholder="Enter specific details such as purpose, data involved, breach description, etc."></textarea>
+
+            <button type="button" onclick="generateNotice()">Generate Notice</button>
+        </form>
+
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        function generateNotice() {
+            const type = document.getElementById('type').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const additionalInfo = document.getElementById('additionalInfo').value;
+
+            let notice = '';
+
+            if (type === 'general') {
+                notice = `
+Subject: Important Information About Your Personal Data
+
+Dear ${name},
+
+We value your privacy and are committed to protecting your personal data. In accordance with the General Data Protection Regulation (GDPR), we are providing you with important information regarding the processing of your personal data.
+
+Who We Are:
+- Controller: [Your Company Name] (Article 13(1)(a))
+- Contact Details: [Your Company's Address, Email, Phone Number] (Article 13(1)(a))
+- Data Protection Officer (if applicable): [DPO’s Name and Contact Details] (Article 13(1)(b))
+
+Purpose and Legal Basis for Processing:
+- We process your personal data for [specific purposes, e.g., providing services, marketing, legal compliance]. (Article 13(1)(c))
+- The legal basis for this processing is [consent/performance of a contract/legal obligation/legitimate interest]. (Article 13(1)(c))
+
+Data We Collect:
+- [List categories of personal data collected] (Article 13(1)(d))
+
+Data Sharing:
+- We may share your data with [categories of recipients, e.g., service providers, partners] for [specific purposes]. (Article 13(1)(e))
+
+Data Retention:
+- We will retain your personal data for [duration or criteria for data retention]. (Article 13(2)(a))
+
+Your Rights:
+- Access: You have the right to request access to your personal data. (Article 15)
+- Rectification: You can request correction of inaccurate data. (Article 16)
+- Erasure: You may request deletion of your personal data. (Article 17)
+- Restriction: You can ask us to restrict the processing of your data. (Article 18)
+- Data Portability: You have the right to receive your data in a machine-readable format. (Article 20)
+- Objection: You can object to the processing of your data. (Article 21)
+- Withdraw Consent: You can withdraw your consent at any time, where applicable. (Article 13(2)(c))
+- Lodge a Complaint: You can file a complaint with a supervisory authority. (Article 13(2)(d))
+
+For any inquiries or to exercise your rights, please contact us at [your contact information].
+
+Thank you for your attention.
+
+Best regards,
+[Your Name]
+[Your Position]
+[Your Company Name]
+                `;
+            } else if (type === 'access') {
+                notice = `
+Subject: Response to Your Data Access Request
+
+Dear ${name},
+
+Thank you for your request dated [request date] to access your personal data. In accordance with the GDPR, we are providing you with the requested information.
+
+Personal Data We Hold About You:
+- [Detailed list of personal data] (Article 15(1)(a))
+
+Purpose of Processing:
+- Your personal data is processed for [specific purposes]. (Article 15(1)(b))
+
+Data Sharing:
+- Your data has been shared with [list of recipients] for [specific purposes]. (Article 15(1)(c))
+
+Retention Period:
+- Your data will be retained for [retention period]. (Article 15(1)(d))
+
+Your Rights:
+- You have the right to request rectification, erasure, restriction of processing, and data portability. (Article 15(1)(e) and Article 15(1)(f))
+
+If you have any questions or require further assistance, please contact us at [your contact information].
+
+Best regards,
+[Your Name]
+[Your Position]
+[Your Company Name]
+                `;
+            } else if (type === 'breach') {
+                notice = `
+Subject: Important Notice About Your Personal Data
+
+Dear ${name},
+
+We are writing to inform you of a recent data breach that may affect your personal data. We take the protection of your information seriously and are providing you with details of the incident.
+
+Nature of the Breach:
+- ${additionalInfo} (Article 34(2))
+
+Data Affected:
+- The breach involved the following personal data: [specific data involved] (Article 34(2))
+
+Potential Consequences:
+- [Description of potential consequences] (Article 34(2))
+
+Measures Taken:
+- We have taken the following steps to address the breach and prevent future occurrences: [actions taken] (Article 34(3))
+
+What You Can Do:
+- [Any recommendations for the data subject, e.g., changing passwords, monitoring accounts]
+
+We apologize for any inconvenience this may cause. If you have any questions or need further assistance, please contact us at [your contact information].
+
+Best regards,
+[Your Name]
+[Your Position]
+[Your Company Name]
+                `;
+            }
+
+            document.getElementById('output').textContent = notice;
+        }
+    </script>
+</body>
+</html>
